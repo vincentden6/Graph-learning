@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Judgement Task</title> 
+        <link  href = "thesis.css" rel = "stylesheet" type = "text/css"/>
+    </head>
+
+    <body>
+        RT measurement phase, click "0" to select left image<br>
+        click "1" to select right image. Also needs database. 
+        <div class = "question">
+            Which one of the side object is<br>
+            closer to the object in the center?<br>
+            <!-- press "0" for left and "1" for right<br> -->
+        </div>
+
+
+        <div class = "center_image">
+            <img id = "center_image">
+        </div>
+
+        <div class = "left_image">
+                <img id = "left_image">
+        </div>
+
+        <div class = "right_image">
+                <img id = "right_image">
+        </div>
+
+        <script>
+            var images = [];
+            images[0] = "file:///Users/vincentdeng/Desktop/research/1.tiff";
+            images[1] = "file:///Users/vincentdeng/Desktop/research/2.tiff";
+            images[2] = "file:///Users/vincentdeng/Desktop/research/3.tiff";
+            images[3] = "file:///Users/vincentdeng/Desktop/research/4.tiff";
+            images[4] = "file:///Users/vincentdeng/Desktop/research/5.tiff";
+            images[5] = "file:///Users/vincentdeng/Desktop/research/6.tiff";
+            images[6] = "file:///Users/vincentdeng/Desktop/research/7.tiff";
+            images[7] = "file:///Users/vincentdeng/Desktop/research/8.tiff";
+            images[8] = "file:///Users/vincentdeng/Desktop/research/9.tiff";
+            images[9] = "file:///Users/vincentdeng/Desktop/research/10.tiff";
+            images[10] = "file:///Users/vincentdeng/Desktop/research/11.tiff";
+            images[11] = "file:///Users/vincentdeng/Desktop/research/12.tiff";
+
+            var min = 0, max = 11;
+
+            function generate_random()
+            {
+                return Math.random() * (max - min) + min; 
+            }
+
+            var num_1 = generate_random();
+            var rounded_1 = Math.round(num_1);
+
+            function pick_random()
+            {
+
+                document.getElementById("center_image").src = images[rounded_1];
+            }            
+
+            pick_random();
+////////////////////////////////////////////////////////////////////////////////////////////////////
+            var num_2 = generate_random();
+            var rounded_2 = Math.round(num_2);
+
+            function pick_second_random()
+            {
+                while (images[rounded_2] === images[rounded_1])
+                {
+                    num_2 = generate_random();
+                    rounded_2 = Math.round(num_2);
+                }
+                document.getElementById("left_image").src = images[rounded_2];
+            }    
+
+            pick_second_random();
+////////////////////////////////////////////////////////////////////////////////////////////////////
+            var num_3 = generate_random();
+            var rounded_3 = Math.round(num_3);
+
+            function pick_third_random()
+            {
+                while (images[rounded_3] === images[rounded_1] || images[rounded_3] === images[rounded_2])
+                {
+                    num_3 = generate_random();
+                    rounded_3 = Math.round(num_3);
+                }
+                document.getElementById("right_image").src = images[rounded_3];
+            }    
+
+            pick_third_random();
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        </script>
+
+        <div class= "refresh">
+                <button onclick="location.href = 'file:///Users/vincentdeng/Desktop/research/Graph_construction.html';" 
+                id="refresh" 
+                >Next</button>
+        </div>
+
+            <script>
+
+                document.onkeydown = checkKeycode
+
+                function checkKeycode(e) 
+                {
+                    var keycode;
+                    keycode = window.event.keyCode;
+                    if (keycode == 48)
+                    {
+                        location.replace("file:///Users/vincentdeng/Desktop/research/judgement_task.html")
+                        // alert("zero selected")
+                    }
+
+                    if (keycode == 49)
+                    {
+                        location.replace("file:///Users/vincentdeng/Desktop/research/judgement_task.html")
+                        // alert("one selected")
+                    }
+                }
+
+            </script>
+
+    </body>
+</html>

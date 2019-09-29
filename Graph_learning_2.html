@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+        <title>
+                Graph Learning Section 2
+        </title>
+        <link  href = "thesis.css" rel = "stylesheet" type = "text/css"/>
+   </head>
+
+   <body onload = "startTimer()">
+    picture slideshow, one second each.
+        <div class = "StudyGraph_2">
+            <script type = "text/javascript">
+
+                var images = [], x = 0;
+                images[0] = "file:///Users/vincentdeng/Desktop/research/a.jpg";
+                images[1] = "file:///Users/vincentdeng/Desktop/research/b.jpg";
+                images[2] = "file:///Users/vincentdeng/Desktop/research/c.jpg";
+                images[3] = "file:///Users/vincentdeng/Desktop/research/d.jpg";
+                images[4] = "file:///Users/vincentdeng/Desktop/research/e.jpg";
+                images[5] = "file:///Users/vincentdeng/Desktop/research/f.jpg";
+
+                function displayNextImage() 
+                {
+                    document.getElementById("img").src = images[x];
+                    x = x + 1;
+                    if (x > 5)
+                    {
+                        x = 0;
+                    }
+                }
+
+                function startTimer() {
+                    setInterval(displayNextImage, 1000);
+                }
+
+            </script>
+
+            <img id="img">
+
+        </div>
+        <div class= "continue_1">
+                <button onclick="location.href = 'file:///Users/vincentdeng/Desktop/research/judgement_task.html';" 
+                id="myButton" 
+                class="float-left submit-button" >Continue</button>
+        </div>
+
+
+        
+   </body>
+</html>

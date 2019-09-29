@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Graph Construction</title> 
+        <link  href = "thesis.css" rel = "stylesheet" type = "text/css"/>
+    </head>
+
+    <div class = "note">
+        To construct a graph<br>
+        Drag pictures, and draw lines holding the mouse.<br>
+        Click "finish" to move on and "reset" to reset the page.<br>
+    </div>
+
+    <body>
+
+        <div id = "potPic">
+            <img id = "p" src= "file:///Users/vincentdeng/Desktop/research/1.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "filmPic"> 
+            <img id = "f" src= "file:///Users/vincentdeng/Desktop/research/2.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "cupPic">
+            <img id = "c" src= "file:///Users/vincentdeng/Desktop/research/3.tiff" width = "100" height= "100">
+        </div>
+    
+        <div id = "measurePic"> 
+            <img id = "m" src= "file:///Users/vincentdeng/Desktop/research/4.tiff" width = "100" height= "100">
+        </div>
+
+
+        <div id = "dicePic">
+            <img id = "d" src= "file:///Users/vincentdeng/Desktop/research/5.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "trayPic"> 
+            <img id = "t" src= "file:///Users/vincentdeng/Desktop/research/6.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "chairPic">
+            <img id = "h" src= "file:///Users/vincentdeng/Desktop/research/7.tiff" width = "100" height= "100">
+        </div>
+    
+        <div id = "hammerPic"> 
+            <img id = "a" src= "file:///Users/vincentdeng/Desktop/research/8.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "boardPic">
+            <img id = "b" src= "file:///Users/vincentdeng/Desktop/research/9.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "rulerPic"> 
+            <img id = "r" src= "file:///Users/vincentdeng/Desktop/research/10.tiff" width = "100" height= "100">
+        </div>
+
+        <div id = "antenaPic">
+            <img id = "n" src= "file:///Users/vincentdeng/Desktop/research/11.tiff" width = "100" height= "100">
+        </div>
+    
+        <div id = "bowlPic"> 
+            <img id = "o" src= "file:///Users/vincentdeng/Desktop/research/12.tiff" width = "100" height= "100">
+        </div>
+
+        <script>
+            var pot = document.getElementById("potPic");
+            var film = document.getElementById("filmPic");
+            var cup = document.getElementById("cupPic");
+            var measure = document.getElementById("measurePic");
+
+            var dice = document.getElementById("dicePic");
+            var tray = document.getElementById("trayPic");
+            var chair = document.getElementById("chairPic");
+            var hammer = document.getElementById("hammerPic");
+
+            var board = document.getElementById("boardPic");
+            var ruler = document.getElementById("rulerPic");
+            var antena = document.getElementById("antenaPic");
+            var bowl = document.getElementById("bowlPic");
+            var moving = false;
+
+            pot.addEventListener("mousedown", initialClick, false);
+            film.addEventListener("mousedown", initialClick, false);
+            cup.addEventListener("mousedown", initialClick, false);
+            measure.addEventListener("mousedown", initialClick, false);
+
+            dice.addEventListener("mousedown", initialClick, false);
+            tray.addEventListener("mousedown", initialClick, false);
+            chair.addEventListener("mousedown", initialClick, false);
+            hammer.addEventListener("mousedown", initialClick, false);
+
+            board.addEventListener("mousedown", initialClick, false);
+            ruler.addEventListener("mousedown", initialClick, false);
+            antena.addEventListener("mousedown", initialClick, false);
+            bowl.addEventListener("mousedown", initialClick, false);
+
+
+            function move(e){
+
+            var newX = e.clientX - 10;
+            var newY = e.clientY - 10;
+
+            image.style.left = newX + "px";
+            image.style.top = newY + "px";
+
+            
+            }
+
+            function initialClick(e) {
+
+            if(moving){
+                document.removeEventListener("mousemove", move);
+                moving = !moving;
+                return;
+            }
+            
+            moving = !moving;
+            image = this;
+
+            document.addEventListener("mousemove", move, false);
+
+            }
+        </script>
+
+        <canvas id="canvas"></canvas>
+
+        <script type="application/javascript">
+                
+            var canvasWidth = 2000;
+            var canvasHeight = 1000;
+            var canvas = null;
+            var bounds = null;
+            var ctx = null;
+            var hasLoaded = false;
+            
+            var startX = 0;
+            var startY = 0;
+            var mouseX = 0;
+            var mouseY = 0;
+            var isDrawing = false;
+            var existingLines = [];
+            
+            function draw() {
+                ctx.fillStyle = "#999";
+                ctx.fillRect(0,0,canvasWidth,canvasHeight);
+                
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                for (var i = 0; i < existingLines.length; ++i) {
+                    var line = existingLines[i];
+                    ctx.moveTo(line.startX,line.startY);
+                    ctx.lineTo(line.endX,line.endY);
+                }
+                
+                ctx.stroke();
+                
+                if (isDrawing) {
+                    ctx.strokeStyle = "darkred";
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(startX,startY);
+                    ctx.lineTo(mouseX,mouseY);
+                    ctx.stroke();
+                }
+            }
+            
+            function onmousedown(e) {
+                if (hasLoaded && e.button === 0) {
+                    if (!isDrawing) {
+                        startX = e.clientX - bounds.left;
+                        startY = e.clientY - bounds.top;
+                        
+                        isDrawing = true;
+                    }
+                    
+                    draw();
+                }
+            }
+            
+            function onmouseup(e) {
+                if (hasLoaded && e.button === 0) {
+                    if (isDrawing) {
+                        existingLines.push({
+                            startX: startX,
+                            startY: startY,
+                            endX: mouseX,
+                            endY: mouseY
+                        });
+                        
+                        isDrawing = false;
+                    }
+                    
+                    draw();
+                }
+            }
+            
+            function onmousemove(e) {
+                if (hasLoaded) {
+                    mouseX = e.clientX - bounds.left;
+                    mouseY = e.clientY - bounds.top;
+                    
+                    if (isDrawing) {
+                        draw();
+                    }
+                }
+            }
+            
+            window.onload = function() {
+                canvas = document.getElementById("canvas");
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                canvas.onmousedown = onmousedown;
+                canvas.onmouseup = onmouseup;
+                canvas.onmousemove = onmousemove;
+                
+                bounds = canvas.getBoundingClientRect();
+                ctx = canvas.getContext("2d");
+                hasLoaded = true;
+                
+                draw();
+            }
+            
+        </script>
+
+        <div class= "to_end">
+                <button onclick="location.href = 'file:///Users/vincentdeng/Desktop/research/end.html';" 
+                id="endButton"  >Finish</button>
+                <button onclick="location.href = 'file:///Users/vincentdeng/Desktop/research/Graph_construction.html';" 
+                id="resetButton" >Reset</button>
+        </div>
+
+    </body>
+</html>
